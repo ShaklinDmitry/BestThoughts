@@ -15,6 +15,8 @@ return new class extends Migration
     {
         Schema::create('best_thought', function (Blueprint $table) {
             $table->id();
+            $table->string('guid')->nullable();
+            $table->text('text')->nullable();
             $table->timestamps();
         });
     }
