@@ -4,7 +4,7 @@ namespace App\Modules\BestThoughts\Application;
 
 use App\Modules\BestThoughts\Domain\BestThoughtRepositoryInterface;
 
-class AddBestThoughtUseCase
+class AddBestThoughtCommand
 {
 
     public function __construct(BestThoughtRepositoryInterface $bestThoughtRepository)
