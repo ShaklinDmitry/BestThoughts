@@ -1,17 +1,30 @@
 <?php
 
-namespace App\Modules\BestThoughts\Application;
+namespace App\Modules\BestThoughts\Application\UseCases;
 
+use App\Modules\BestThoughts\Application\DTO\BestThoughtDTO;
+use App\Modules\BestThoughts\Domain\BestThought;
 use App\Modules\BestThoughts\Domain\BestThoughtRepositoryInterface;
 
 class AddBestThoughtCommand
 {
 
-    public function __construct(BestThoughtRepositoryInterface $bestThoughtRepository)
+    /**
+     * @param BestThoughtRepositoryInterface $bestThoughtRepository
+     */
+    public function __construct(private BestThoughtRepositoryInterface $bestThoughtRepository)
     {
     }
 
-    public function addBestThought(){
+    /**
+     * @param string $text
+     * @return mixed
+     */
+    public function execute(string $text): BestThoughtDTO{
+        $bestThought = new BestThought();
 
+        $bestThoughtDTO = $this->bestThoughtRepository->addBestThought($bestThought->guid,$text);
+
+        return $bestThoughtDTO;
     }
 }
