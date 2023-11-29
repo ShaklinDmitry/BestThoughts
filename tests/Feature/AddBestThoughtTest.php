@@ -10,6 +10,7 @@ use Tests\TestCase;
 
 class AddBestThoughtTest extends TestCase
 {
+    use RefreshDatabase;
 
     public function test_add_best_thought()
     {

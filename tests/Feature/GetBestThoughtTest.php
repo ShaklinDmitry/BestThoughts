@@ -11,6 +11,7 @@ use Tests\TestCase;
 
 class GetBestThoughtTest extends TestCase
 {
+    use RefreshDatabase;
 
     public function test_get_best_thoughts()
     {
@@ -22,7 +23,7 @@ class GetBestThoughtTest extends TestCase
             [
                 'text' => $text,
                 'guid' => $guid,
-                'user' => $user->id
+                'userd' => $user->id
             ]
         );
 
