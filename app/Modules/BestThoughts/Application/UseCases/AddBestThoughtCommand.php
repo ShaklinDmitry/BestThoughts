@@ -6,7 +6,7 @@ use App\Modules\BestThoughts\Application\DTO\BestThoughtDTO;
 use App\Modules\BestThoughts\Domain\BestThought;
 use App\Modules\BestThoughts\Domain\BestThoughtRepositoryInterface;
 
-class AddBestThoughtCommand
+class AddBestThoughtCommand implements AddBestThoughtCommandInterface
 {
 
     /**
@@ -20,10 +20,10 @@ class AddBestThoughtCommand
      * @param string $text
      * @return mixed
      */
-    public function execute(string $text): BestThoughtDTO{
+    public function execute(string $text, int $userId): BestThoughtDTO{
         $bestThought = new BestThought();
 
-        $bestThoughtDTO = $this->bestThoughtRepository->addBestThought($bestThought->guid,$text);
+        $bestThoughtDTO = $this->bestThoughtRepository->addBestThought($bestThought->guid, $text, $userId);
 
         return $bestThoughtDTO;
     }
