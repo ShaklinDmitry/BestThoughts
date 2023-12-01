@@ -11,6 +11,6 @@ class BestThought extends Model
 
     protected $table = 'best_thought';
 
-    protected $fillable = ['guid', 'text'];
+    protected $fillable = ['guid', 'text', 'user_id'];
 
 }
