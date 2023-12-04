@@ -4,14 +4,11 @@ namespace App\Modules\BestThoughts\Application\DTO;
 
 class BestThoughtDTOCollection
 {
-    private array $collection;
-
     /**
      * @param array $collection
      */
-    public function __construct(array $collection)
+    public function __construct(private readonly array $collection)
     {
-        $this->collection = $collection;
     }
 
 
