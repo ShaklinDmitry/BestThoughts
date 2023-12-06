@@ -7,7 +7,7 @@ class BestThoughtDTOCollection
     /**
      * @param array $collection
      */
-    public function __construct(private readonly array $collection)
+    public function __construct(public readonly array $collection)
     {
     }
 
