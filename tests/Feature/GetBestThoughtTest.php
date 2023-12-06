@@ -23,13 +23,13 @@ class GetBestThoughtTest extends TestCase
             [
                 'text' => $text,
                 'guid' => $guid,
-                'userd' => $user->id
+                'user_id' => $user->id
             ]
         );
 
         $getBestThoughtsCommand = app(GetBestThoughtsCommandInterface::class);
-        $bestThoughts = $getBestThoughtsCommand->execute();
+        $bestThoughts = $getBestThoughtsCommand->execute($user->id);
 
-        $this->assertSame($guid, $bestThoughts->guid);
+        $this->assertSame($guid, $bestThoughts->collection[0]->guid);
     }
 }
