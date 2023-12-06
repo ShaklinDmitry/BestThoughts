@@ -2,11 +2,13 @@
 
 namespace App\Modules\BestThoughts\Application\UseCases;
 
+use App\Modules\BestThoughts\Application\DTO\BestThoughtDTOCollection;
+
 interface GetBestThoughtsCommandInterface
 {
     /**
      * @param int $userId
-     * @return mixed
+     * @return BestThoughtDTOCollection
      */
-    public function execute(int $userId);
+    public function execute(int $userId):BestThoughtDTOCollection;
 }
