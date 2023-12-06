@@ -2,9 +2,10 @@
 
 namespace App\Modules\BestThoughts\Application\UseCases;
 
+use App\Modules\BestThoughts\Application\DTO\BestThoughtDTOCollection;
 use App\Modules\BestThoughts\Domain\BestThoughtRepositoryInterface;
 
-class GetBestThoughtsCommand implements GetBestThoughtsCommandInterface
+final class GetBestThoughtsCommand implements GetBestThoughtsCommandInterface
 {
     /**
      * @param BestThoughtRepositoryInterface $bestThoughtRepository
@@ -13,8 +14,13 @@ class GetBestThoughtsCommand implements GetBestThoughtsCommandInterface
     {
     }
 
-    public function execute(int $userId)
+    /**
+     * @param int $userId
+     * @return BestThoughtDTOCollection
+     */
+    public function execute(int $userId): BestThoughtDTOCollection
     {
-        // TODO: Implement execute() method.
+        $bestThoughtsDTOCollection = $this->bestThoughtRepository->getBestThought($userId);
+        return $bestThoughtsDTOCollection;
     }
 }
