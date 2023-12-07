@@ -1,12 +1,10 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\BestThought;
 
 use App\Models\User;
-use App\Modules\BestThoughts\Application\UseCases\AddBestThoughtCommand;
 use App\Modules\BestThoughts\Application\UseCases\AddBestThoughtCommandInterface;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class AddBestThoughtTest extends TestCase
