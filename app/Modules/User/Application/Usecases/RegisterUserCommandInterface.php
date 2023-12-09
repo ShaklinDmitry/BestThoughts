@@ -1,8 +1,16 @@
 <?php
 
-namespace App\Modules\Auth\Application\Usecases;
+namespace App\Modules\User\Application\Usecases;
+
+use App\Modules\User\Application\DTO\UserDTO;
 
 interface RegisterUserCommandInterface
 {
-    public function execute();
+    /**
+     * @param string $name
+     * @param string $email
+     * @param string $password
+     * @return UserDTO
+     */
+    public function execute(string $name, string $email, string $password):UserDTO;
 }
