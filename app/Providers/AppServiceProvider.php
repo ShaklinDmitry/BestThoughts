@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Modules\User\Application\Usecases\CreateUserTokenCommand;
+use App\Modules\User\Application\Usecases\CreateUserTokenCommandInterface;
 use App\Modules\User\Application\Usecases\RegisterUserCommand;
 use App\Modules\User\Application\Usecases\RegisterUserCommandInterface;
 use App\Modules\User\Infrastructure\Repositories\UserRepository;
@@ -44,6 +46,11 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(RegisterUserCommandInterface::class, function ($app){
             $userRepository = app(UserRepositoryInterface::class);
             return new RegisterUserCommand($userRepository);
+        });
+
+        $this->app->bind(CreateUserTokenCommandInterface::class, function ($app){
+            $userRepository = app(UserRepositoryInterface::class);
+            return new CreateUserTokenCommand($userRepository);
         });
     }
 
