@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\Auth\Infrastructure\Repositories;
+namespace App\Modules\User\Infrastructure\Repositories;
 
 use App\Models\User;
 use App\Modules\User\Application\DTO\UserDTO;
@@ -9,18 +9,29 @@ use App\Modules\User\Domain\UserRepositoryInterface;
 class UserRepository implements UserRepositoryInterface
 {
     /**
-     * @param string $login
+     * @param string $name
      * @param string $email
      * @param string $password
      * @return UserDTO
      */
-    public function createUser(string $login, string $email, string $password){
+    public function createUser(string $name, string $email, string $password){
         $user = User::create([
-            'login' => $login,
+            'name' => $name,
             'email' => $email,
             'password' => $password
         ]);
 
-        return new UserDTO($user->login, $user->email, $user->password);
+        return new UserDTO($user->name, $user->email, $user->password);
     }
+
+    /**
+     * @param int $userId
+     * @return string
+     */
+    public function createUserToken(int $userId):string{
+        $user = User::find($userId);
+        $token = $user->createToken('auth_token')->plainTextToken;
+        return $token;
+    }
+
 }
