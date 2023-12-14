@@ -3,6 +3,7 @@
 namespace App\Modules\User\Application\Usecases;
 
 use App\Modules\User\Application\DTO\UserDTO;
+use App\Modules\User\Domain\User;
 use App\Modules\User\Domain\UserRepositoryInterface;
 
 class RegisterUserCommand implements RegisterUserCommandInterface
@@ -18,11 +19,13 @@ class RegisterUserCommand implements RegisterUserCommandInterface
      * @param string $name
      * @param string $email
      * @param string $password
-     * @return void
+     * @return UserDTO
      */
     public function execute(string $name, string $email, string $password): UserDTO
     {
-        $userDTO = $this->userRepository->createUser($name, $email, $password);
+        $user = new User();
+
+        $userDTO = $this->userRepository->createUser($user->guid, $name, $email, $password);
         return $userDTO;
     }
 }
