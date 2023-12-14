@@ -5,8 +5,8 @@ namespace App\Modules\User\Application\Usecases;
 interface CreateUserTokenCommandInterface
 {
     /**
-     * @param int $userId
-     * @return mixed
+     * @param string $guid
+     * @return string
      */
-    public function execute(int $userId):string;
+    public function execute(string $guid):string;
 }

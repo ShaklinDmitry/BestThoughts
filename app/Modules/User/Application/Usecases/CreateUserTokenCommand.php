@@ -15,11 +15,11 @@ class CreateUserTokenCommand implements CreateUserTokenCommandInterface
     }
 
     /**
-     * @param int $userId
+     * @param string $guid
      * @return string
      */
-    public function execute(int $userId):string{
-        $userToken = $this->userRepository->createUserToken($userId);
+    public function execute(string $guid):string{
+        $userToken = $this->userRepository->createUserToken($guid);
         return $userToken;
     }
 }
