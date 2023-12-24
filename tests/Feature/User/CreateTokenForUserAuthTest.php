@@ -13,10 +13,14 @@ class CreateTokenForUserAuthTest extends TestCase
 
     public function test_create_token_for_user_auth()
     {
-        $user = User::factory()->create();
+        $user = User::factory()->create(
+            [
+                'guid' => uniqid()
+            ]
+        );
 
         $createTokenForUserAuthCommand = app(CreateUserTokenCommandInterface::class);
-        $createTokenForUserAuthCommand->execute($user->id);
+        $createTokenForUserAuthCommand->execute($user->guid);
 
         $this->assertDatabaseHas("personal_access_tokens",
         [
