@@ -1,0 +1,70 @@
+version: "3.7"
+services:
+  app:
+    build:
+      args:
+        user: sammy1
+        uid: 1001
+      context: ./
+      dockerfile: Dockerfile
+    image: travellist
+    container_name: travellist-appDevBestThoughts
+    restart: unless-stopped
+    working_dir: /var/www/
+    volumes:
+      - ./:/var/www
+    networks:
+      - travellistDev1
+
+  mysqlBestThought:
+      image: mysql:8
+      volumes:
+          - ./mysqldata:/var/lib/mysql
+      environment:
+          - "MYSQL_ROOT_PASSWORD=secret"
+          - "MYSQL_DATABASE=BestThoughtBase"
+          - "MYSQL_USER=user"
+          - "MYSQL_PASSWORD=password"
+      ports:
+          - "3332:3306"
+      networks:
+          - travellistDev1
+
+  mysqlBestThoughtTest:
+      image: mysql:8
+      volumes:
+          - ./mysqldatatest:/var/lib/mysql
+      environment:
+          - "MYSQL_ROOT_PASSWORD=secret"
+          - "MYSQL_DATABASE=BestThoughtBaseTest"
+          - "MYSQL_USER=user"
+          - "MYSQL_PASSWORD=password"
+      ports:
+          - "3333:3306"
+      networks:
+          - travellistDev1
+
+
+  nginxDev:
+    image: nginx:alpine
+    container_name: travellist-nginxDev1
+    restart: unless-stopped
+    ports:
+      - 8101:80
+    volumes:
+      - ./:/var/www
+      - ./docker-compose/nginx:/etc/nginx/conf.d/
+    networks:
+      - travellistDev1
+
+  redis:
+      image: 'bitnami/redis:latest'
+      environment:
+          - ALLOW_EMPTY_PASSWORD=yes
+      networks:
+          - travellistDev1
+
+networks:
+  travellistDev1:
+    driver: bridge
+
