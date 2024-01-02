@@ -18,18 +18,17 @@ class RegisterUserTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_register_user()
+    public function test_register_user_command()
     {
         $name = 'name';
         $email = 'lol@mail.ru';
-        $password = Hash::make('password');
+        $password = '123456789';
 
         $registerUserCommand = app(RegisterUserCommandInterface::class);
         $userDTO = $registerUserCommand->execute($name, $email, $password);
 
         $this->assertSame($userDTO->name, $name);
         $this->assertSame($userDTO->email, $email);
-        $this->assertSame($userDTO->password, $password);
     }
 
 

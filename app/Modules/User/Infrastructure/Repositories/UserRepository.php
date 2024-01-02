@@ -44,10 +44,13 @@ class UserRepository implements UserRepositoryInterface
      * @return UserDTO
      */
     public function getUser(string $email, string $password): UserDTO{
+
         $user = User::where([
             'email' => $email,
-            'password' => $password
-        ])->firstOrFail();
+            'password' => Hash::make($password)
+        ])->first();
+
+        dd($user);
 
         return new UserDTO($user->guid, $user->name, $user->email, $user->password);
     }

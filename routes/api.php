@@ -23,7 +23,12 @@ Route::middleware('auth:sanctum')->post('/bestthought', function (Request $reque
     return $request->user();
 });
 
+Route::middleware('auth:sanctum')->post('/picture', [\App\Modules\Pictures\Infrastructure\Controllers\ImageController::class, 'saveImage']);
+
+
 
 Route::post('/user', [\App\Modules\User\Infrastructure\Controllers\UserController::class, 'register']);
 
 Route::post('/login', [\App\Modules\User\Infrastructure\Controllers\UserController::class, 'login']);
+
+

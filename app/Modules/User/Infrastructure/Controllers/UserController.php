@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -31,13 +32,19 @@ class UserController extends Controller
      */
     public function register(Request $request){
 
-        $validatedData = $request->validate([
+        $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8',
         ]);
 
-        $userDTO = $this->registerUserCommand->execute($validatedData['name'], $validatedData['email'], Hash::make($validatedData['password']));
+        if ($validator->fails()) {
+            return response()->json(['status' => 'error', 'messages' => 'The given data was invalid.', 'errors' => $validator->errors()]);
+        }
+
+        $validatedData = $validator->validated();
+
+        $userDTO = $this->registerUserCommand->execute($validatedData['name'], $validatedData['email'], $validatedData['password']);
 
         $token = $this->createUserTokenCommand->execute($userDTO->guid);
 
@@ -64,18 +71,14 @@ class UserController extends Controller
      */
     public function login(Request $request){
         try {
-            $validatedData = $request->validate([
-                'email' => 'required|string|email|max:255',
-                'password' => 'required|string|min:8',
-            ]);
 
-            if (!Auth::attempt($request->only($validatedData['email'], $validatedData['password']))) {
+            if (!Auth::attempt($request->only('email', 'password'))) {
                 return response()->json([
                     'message' => 'Invalid login details',
                 ], 401);
             }
 
-            $userDTO = $this->userRepository->getUser($validatedData['email'], $validatedData['password']);
+            $userDTO = $this->userRepository->getUser($request->email, $request->password);
 
             $token = $this->createUserTokenCommand->execute($userDTO->guid);
 
@@ -93,15 +96,13 @@ class UserController extends Controller
                     ]
                 ], 200
             );
-        }catch(ModelNotFoundException $exception){
+        }catch (\Exception $exception){
             response()->json([
                 "data" => [
-                    "message" => "There is no users with such email or password"
+                    "message" => $exception->getMessage()
                 ]
-            ], 401);
+            ]);
         }
-
-
 
     }
 

@@ -2,6 +2,12 @@
 
 namespace App\Providers;
 
+use App\Modules\Pictures\Application\SaveImageCommand;
+use App\Modules\Pictures\Application\SaveImageCommandInterface;
+use App\Modules\Pictures\Domain\ImageRepositoryInterface;
+use App\Modules\Pictures\Domain\ImageStorageInterface;
+use App\Modules\Pictures\Infrastructure\Repositories\ImageRepository;
+use App\Modules\Pictures\Infrastructure\Storage\ImageStorage;
 use App\Modules\User\Application\Usecases\CreateUserTokenCommand;
 use App\Modules\User\Application\Usecases\CreateUserTokenCommandInterface;
 use App\Modules\User\Application\Usecases\RegisterUserCommand;
@@ -51,6 +57,18 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(CreateUserTokenCommandInterface::class, function ($app){
             $userRepository = app(UserRepositoryInterface::class);
             return new CreateUserTokenCommand($userRepository);
+        });
+
+        $this->app->bind(ImageRepositoryInterface::class, function ($app){
+           return new ImageRepository();
+        });
+
+        $this->app->bind(ImageStorageInterface::class, function ($app){
+            return new ImageStorage();
+        });
+
+        $this->app->bind(SaveImageCommandInterface::class, function ($app){
+            return new SaveImageCommand(app(ImageRepositoryInterface::class), app(ImageStorageInterface::class));
         });
     }
 
