@@ -2,7 +2,9 @@
 
 namespace App\Modules\Pictures\Application;
 
-use App\Modules\Pictures\Application\DTOs\ImageDTO;
+use App\Modules\Pictures\Application\DTOs\ImageRepositoryDTO;
+use App\Modules\Pictures\Application\DTOs\ImageStorageDTO;
+use App\Modules\Pictures\Domain\Image;
 use App\Modules\Pictures\Domain\ImageRepositoryInterface;
 use App\Modules\Pictures\Domain\ImageStorageInterface;
 use App\Modules\Pictures\Domain\ImageUploadedFileInterface;
@@ -22,12 +24,16 @@ class SaveImageCommand implements SaveImageCommandInterface
     /**
      * @param ImageUploadedFileInterface $imageUploadedFile
      * @param int $userId
-     * @return ImageDTO
+     * @return ImageRepositoryDTO
      */
-    public function execute(ImageUploadedFileInterface $imageUploadedFile, int $userId): ImageDTO
+    public function execute(ImageUploadedFileInterface $imageUploadedFile, int $userId):ImageRepositoryDTO
     {
-        $imageDTO = $this->imageStorage->saveImage($imageUploadedFile, $userId);
+        $imageStorageDTO = $this->imageStorage->saveImage($imageUploadedFile, $userId);
 
-        return $imageDTO;
+        $image = new Image($imageStorageDTO->name, $imageStorageDTO->path, $imageStorageDTO->size, $imageStorageDTO->type);
+
+        $imageRepositoryDTO = $this->imageRepository->saveImage($image, $userId);
+
+        return $imageRepositoryDTO;
     }
 }

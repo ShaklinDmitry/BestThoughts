@@ -2,7 +2,7 @@
 
 namespace App\Modules\Pictures\Application\DTOs;
 
-class ImageDTO
+class ImageStorageDTO
 {
 
     /**
@@ -11,7 +11,8 @@ class ImageDTO
      * @param string $size
      * @param string $type
      */
-    public function __construct(public readonly string $name, public readonly string $path, public readonly string $size, public readonly string $type)
+    public function __construct(public readonly string $name, public readonly string $path,
+                                public readonly string $size, public readonly string $type)
     {
     }
 

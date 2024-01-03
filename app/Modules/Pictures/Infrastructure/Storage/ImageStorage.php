@@ -2,7 +2,7 @@
 
 namespace App\Modules\Pictures\Infrastructure\Storage;
 
-use App\Modules\Pictures\Application\DTOs\ImageDTO;
+use App\Modules\Pictures\Application\DTOs\ImageStorageDTO;
 use App\Modules\Pictures\Domain\ImageStorageInterface;
 use App\Modules\Pictures\Domain\ImageUploadedFileInterface;
 use App\Modules\Pictures\Infrastructure\Helpers\FileSize;
@@ -16,9 +16,9 @@ class ImageStorage implements ImageStorageInterface
     /**
      * @param ImageUploadedFileInterface $file
      * @param int $userId
-     * @return ImageDTO
+     * @return ImageStorageDTO
      */
-    public function saveImage(ImageUploadedFileInterface $file, int $userId): ImageDTO
+    public function saveImage(ImageUploadedFileInterface $file, int $userId): ImageStorageDTO
     {
 
         $image = $file->getUploadedFile();
@@ -33,7 +33,7 @@ class ImageStorage implements ImageStorageInterface
             $file_type  = $image->getClientOriginalExtension();
             $filePath   = $path . $fileName;
 
-            return new ImageDTO($file_name, $filePath, $this->fileSize($image), $file_type);
+            return new ImageStorageDTO($file_name, $filePath, $this->fileSize($image), $file_type);
         }
     }
 

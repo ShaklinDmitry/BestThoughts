@@ -23,14 +23,20 @@ class ImageController extends Controller
 
     /**
      * @param Request $request
-     * @return void
+     * @return \Illuminate\Http\JsonResponse
      */
     public function saveImage(Request $request){
 
         $image = $request->file('image');
         $imageUploadedFile = new ImageUploadedFile($image);
 
-        $this->saveImageCommand->execute($imageUploadedFile, Auth::id());
+        $imageRepositoryDTO = $this->saveImageCommand->execute($imageUploadedFile, Auth::id());
 
+        return response()->json([
+            "data" => [
+                "message" => "Image created",
+                "image" => $imageRepositoryDTO->toArray()
+            ]
+        ]);
     }
 }
