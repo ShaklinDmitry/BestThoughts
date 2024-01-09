@@ -2,6 +2,7 @@
 
 namespace App\Modules\Pictures\Infrastructure\Storage;
 
+use App\Modules\Pictures\Application\DTOs\GetImageStorageDTO;
 use App\Modules\Pictures\Application\DTOs\ImageStorageDTO;
 use App\Modules\Pictures\Domain\ImageStorageInterface;
 use App\Modules\Pictures\Domain\ImageUploadedFileInterface;
@@ -25,16 +26,27 @@ class ImageStorage implements ImageStorageInterface
 
         if($image) {
             $fileName   = time() . $image->getClientOriginalName();
-            $path = Storage::putFileAs(
-                "images/$userId", $image, $fileName
+            $filePath = Storage::putFileAs(
+                "public/images", $image, $fileName
             );
 
             $file_name  = $image->getClientOriginalName();
             $file_type  = $image->getClientOriginalExtension();
-            $filePath   = $path . $fileName;
 
             return new ImageStorageDTO($file_name, $filePath, $this->fileSize($image), $file_type);
         }
+    }
+
+
+    /**
+     * @param string $path
+     * @return mixed
+     */
+    public function getImage(string $path)
+    {
+        $imageContent = Storage::get( $path);
+
+        return $imageContent;
     }
 
 

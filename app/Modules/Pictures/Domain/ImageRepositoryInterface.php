@@ -10,4 +10,11 @@ interface ImageRepositoryInterface
      * @return mixed
      */
     public function saveImage(Image $image, int $userId);
+
+    /**
+     * @param int $userId
+     * @param int $page
+     * @return mixed
+     */
+    public function getImages(int $userId, int $page);
 }

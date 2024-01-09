@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,10 +26,14 @@ Route::middleware('auth:sanctum')->post('/bestthought', function (Request $reque
 
 Route::middleware('auth:sanctum')->post('/picture', [\App\Modules\Pictures\Infrastructure\Controllers\ImageController::class, 'saveImage']);
 
+Route::middleware('auth:sanctum')->get('/pictures', [\App\Modules\Pictures\Infrastructure\Controllers\ImageController::class, 'getImages']);
+
 
 
 Route::post('/user', [\App\Modules\User\Infrastructure\Controllers\UserController::class, 'register']);
 
 Route::post('/login', [\App\Modules\User\Infrastructure\Controllers\UserController::class, 'login']);
 
-
+Route::get('/foo', function () {
+    return Artisan::call('storage:link');
+});

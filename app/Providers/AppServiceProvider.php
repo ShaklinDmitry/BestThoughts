@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Modules\Pictures\Application\GetImagesCommand;
+use App\Modules\Pictures\Application\GetImagesCommandInterface;
 use App\Modules\Pictures\Application\SaveImageCommand;
 use App\Modules\Pictures\Application\SaveImageCommandInterface;
 use App\Modules\Pictures\Domain\ImageRepositoryInterface;
@@ -70,6 +72,11 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(SaveImageCommandInterface::class, function ($app){
             return new SaveImageCommand(app(ImageRepositoryInterface::class), app(ImageStorageInterface::class));
         });
+
+        $this->app->bind(GetImagesCommandInterface::class, function ($app){
+            return new GetImagesCommand(app(ImageRepositoryInterface::class), app(ImageStorageInterface::class));
+        });
+
     }
 
     /**

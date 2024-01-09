@@ -2,7 +2,7 @@
 
 namespace App\Modules\Pictures\Application\DTOs;
 
-class ImageDTOCollection
+class ImageRepositoryDTOCollection
 {
     /**
      * @param array $collection
